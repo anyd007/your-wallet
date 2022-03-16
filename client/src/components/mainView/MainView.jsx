@@ -10,7 +10,8 @@ const mainView = (props) => {
       <div className="background"></div>
       <div className="title">
           
-        <h1 className="font-mainView"><Fade top cascade>WITAJ!<br/>to jest TWÓJ PORTFEL</Fade></h1>
+        <h2 className="font-mainView"><Fade top cascade>WITAJ!</Fade></h2>
+        <h1 className="font-mainView"><Fade top cascade>OTO TWÓJ PORTFEL</Fade></h1>
         
       </div>
       <div className="groupBtn">
