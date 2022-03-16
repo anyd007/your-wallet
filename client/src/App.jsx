@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import MainView from "./components/mainView/MainView";
+import Regestry from "./components/regestry/Regestry";
 import "./App.css"
 
 class App extends Component{
@@ -13,7 +15,7 @@ class App extends Component{
 
         return(
             <div className="app">
-                <h1>hello world...its me</h1>
+                <MainView />
             </div>
         )
     }
