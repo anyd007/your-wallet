@@ -1,7 +1,6 @@
 import React from "react";
 import "./mainView.css";
-import Fade from 'react-reveal/Fade';
-import { Flip } from "react-reveal";
+import Fade from 'react-reveal/Fade'; //biblioteka efektów react
 import Zoom from 'react-reveal/Zoom';
 
 const mainView = (props) => {
@@ -16,7 +15,7 @@ const mainView = (props) => {
       </div>
       <div className="groupBtn">
          <Zoom><button type="button" className="btn">LOGOWANIE</button></Zoom>
-          <Zoom><button type="button" className="btn">REJESTRACJA</button></Zoom>
+          <Zoom><button onClick={()=>props.openRegestry()} type="button" className="btn">REJESTRACJA</button></Zoom>
       </div>
     </div>
   );
