@@ -22,7 +22,7 @@ app.get("*", (req,res)=>{
 })
 
 
-const herokuPort  = process.env.PORT || 3002
+const herokuPort  = process.env.PORT || 3000
 app.listen(herokuPort, ()=>{
     console.log(`działam na porcie ${herokuPort}`);
 })

@@ -17,7 +17,13 @@ class App extends Component {
       this.setState({ mainWindow: false });
       this.setState({ regestry: true });
     }
-    console.log("ni");
+  };
+  handleCloseRegestry = () => {
+    const regestry = this.state;
+    if (regestry) {
+      this.setState({ mainWindow: true });
+      this.setState({ regestry: false });
+    }
   };
   render() {
     const { mainWindow } = this.state;
@@ -27,7 +33,9 @@ class App extends Component {
         {mainWindow && (
           <MainView openRegestry={() => this.handleOpenRegestry()} />
         )}
-        {regestry && <Regestry />}
+        {regestry && (
+          <Regestry colseRegestry={() => this.handleCloseRegestry()} />
+        )}
       </div>
     );
   }
