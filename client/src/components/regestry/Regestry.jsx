@@ -74,8 +74,8 @@ let regexpCheck = new RegExp("^(?=.*[A-Z])(?=.*[!@#\$%\^&\*])(?=.{8,})");
     usernameInput.classList.add('errorInput')
       usernameInput.value = 'ta nazwa użytkownika jest już zajęta, wybierz inną...'
       usernameInput.onclick = () =>{
-        repasswordInput.classList.remove("errorInput")
-        repasswordInput.value = ''
+        usernameInput.classList.remove("errorInput")
+        usernameInput.value = ''
       }
   }
 }
