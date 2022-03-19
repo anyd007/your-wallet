@@ -1,0 +1,18 @@
+.backgroundLog{
+top: 0%;
+z-index: -1;
+position: fixed;
+width: 100%;
+height: 100%;
+background: rgb(16, 11, 22);
+background: radial-gradient(
+  circle,
+  rgba(16, 11, 22, 1) 0%,
+  rgba(103, 23, 159, 1) 100%)
+}
+.loginInputGroup{
+    text-align: center;
+}
+.loginBtnGroup{
+    text-align: center;
+}
