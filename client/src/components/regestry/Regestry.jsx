@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useEffect } from "react";
 import uniqid from "uniqid";
 import Zoom from "react-reveal/Zoom";
+import axios from "axios"
 import "./regestry.css";
 
 const Regestry = (props) => {
@@ -69,6 +70,10 @@ let regexpCheck = new RegExp("^(?=.*[A-Z])(?=.*[!@#\$%\^&\*])(?=.{8,})");
         repasswordInput.value = ''
       }
   }
+  if(checkUser.includes(regUser.username)===true){
+    usernameInput.classList.add('errorInput')
+      usernameInput.value = 'ta nazwa użytkownika jest już zajęta, wybierz inną...'
+  }
 }
 //wysyłąnie danych na express.js
   const sendRegestryToExpress = (username, password, id) =>{
@@ -82,8 +87,14 @@ let regexpCheck = new RegExp("^(?=.*[A-Z])(?=.*[!@#\$%\^&\*])(?=.{8,})");
       headers:{ "Content-type": "application/json" },
     })
   }
-
-  return (
+  //pobieranie danych wcelu porównania czy nazwa użytkownika istnieje
+  const [checkUser, setCheckUser] = React.useState('')
+   React.useEffect(()=>{
+      axios.get("/api/regestry")
+      .then(res => setCheckUser(res.data.map(el=>el.username)))
+    }, [])
+    
+return (
     <div className="mainContener">
       <div className="backackground"></div>
       <div className="blur"></div>
