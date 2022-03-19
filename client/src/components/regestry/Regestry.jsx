@@ -73,6 +73,10 @@ let regexpCheck = new RegExp("^(?=.*[A-Z])(?=.*[!@#\$%\^&\*])(?=.{8,})");
   if(checkUser.includes(regUser.username)===true){
     usernameInput.classList.add('errorInput')
       usernameInput.value = 'ta nazwa użytkownika jest już zajęta, wybierz inną...'
+      usernameInput.onclick = () =>{
+        repasswordInput.classList.remove("errorInput")
+        repasswordInput.value = ''
+      }
   }
 }
 //wysyłąnie danych na express.js
