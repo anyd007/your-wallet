@@ -70,7 +70,7 @@ let regexpCheck = new RegExp("^(?=.*[A-Z])(?=.*[!@#\$%\^&\*])(?=.{8,})");
         repasswordInput.value = ''
       }
   }
-  if(checkUser.includes(regUser.username)===true){
+  if(checkUser.includes(regUser.username)===true){  //wryfikacja czy nazwa istnieje
     usernameInput.classList.add('errorInput')
       usernameInput.value = 'ta nazwa użytkownika jest już zajęta, wybierz inną...'
       usernameInput.onclick = () =>{
