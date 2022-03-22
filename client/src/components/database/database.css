@@ -52,6 +52,7 @@ select{
   border-bottom: 1px solid white;
   transition: 0.5s ease all;
   cursor: pointer;
+  width: 35%;
 }
 select:focus {
   outline: none;

@@ -3,14 +3,17 @@ import "./database.css"
 
 
 const Database = props =>{
-    const [incomeOption, setIncomeOption] = React.useState('')
+    const [incomeOption, setIncomeOption] = React.useState([])
     React.useEffect(()=>{
-        setIncomeOption({
-            option: "wypłata",
-            option: "darowizna"
-        })
+        setIncomeOption([
+           { option: "wypłata"},
+           { option: "darowizna"},
+           {option: "wpłata własna"},
+           {option: "zasiłek"},
+           {option: "inne"}
+        ])
     },[])
-    console.log(incomeOption.option);
+    console.log(incomeOption.map(el=>el.option));
     return(
         <div className="databaseMainContener">
             <div className="databaseBackground"></div>
@@ -20,15 +23,15 @@ const Database = props =>{
             </div>
             <div className="incomeGroup">
                 <div className="inputIncomeGroup">
-                <label htmlFor="incomeInput">WPROWADŹ KWOTĘ PRZYCHODU</label><br />
-                <input className="incomeInput" type="number" name="incomeInput"/>
+                    <label htmlFor="incomeInput">WPROWADŹ KWOTĘ PRZYCHODU</label><br />
+                    <input className="incomeInput" type="number" name="incomeInput"/>
                 </div>
                 <div className="optionIncomeGroup">
-                <label htmlFor="select">WYBIERZ RODZAJ PRZYCHODU</label><br />
-                <select className="selectIncome" name="select">
-                    <option>{}</option>
+                    <label htmlFor="select">WYBIERZ RODZAJ PRZYCHODU</label><br />
+                     <select className="selectIncome" name="select">
+                   {incomeOption.map(el=>(<option>{el.option}</option>))}
                 </select>
-                </div>
+               </div>
             </div>
         </div>
     )
