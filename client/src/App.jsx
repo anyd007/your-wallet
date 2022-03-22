@@ -38,6 +38,14 @@ class App extends Component {
           this.setState({login: true})
       }
   }
+  handleCloseLogin = () =>{
+    const login = this.state
+    if(login) {
+      this.setState({mainWindow: true})
+      this.setState({login: false})
+      this.setState({regestry: false})
+    }
+  }
   render() {
     const { mainWindow } = this.state;
     const { regestry } = this.state;
@@ -51,8 +59,8 @@ class App extends Component {
         {regestry && (
           <Regestry colseRegestry={() => this.handleCloseRegestry()} />
         )}
-        {login && 
-         <Login />}
+        {login && (
+         <Login closeLoginWindow={() => this.handleCloseLogin()}/>)}
       </div>
     )
   }
