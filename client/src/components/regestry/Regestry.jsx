@@ -32,7 +32,7 @@ let regexpCheck = new RegExp("^(?=.*[A-Z])(?=.*[!@#\$%\^&\*])(?=.{8,})");
 
     if(regUser.password === regUser.repassword && regexpCheck.test(regUser.password) ==true 
     && regUser.username.length >=3){
-      sendRegestryToExpress(regUser.username, regUser.password,regUser.id)
+      sendRegestryToExpress(regUser.username, regUser.password,regUser.id) //przekazywanie danych do kunkcji wysyłania na serwer
       regestrySucess.style.display = "flex"
       blur.style.display = "flex"
       regInputs.forEach(el=>{
@@ -70,7 +70,7 @@ let regexpCheck = new RegExp("^(?=.*[A-Z])(?=.*[!@#\$%\^&\*])(?=.{8,})");
         repasswordInput.value = ''
       }
   }
-  if(checkUser.includes(regUser.username)===true){
+  if(checkUser.includes(regUser.username)===true){    //sprawdzanie czy nazwa istnieje w bazie danych
     usernameInput.classList.add('errorInput')
       usernameInput.value = 'ta nazwa użytkownika jest już zajęta, wybierz inną...'
   }
