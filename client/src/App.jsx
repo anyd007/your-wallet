@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import MainView from "./components/mainView/MainView";
 import Regestry from "./components/regestry/Regestry";
 import Login from "./components/login/Login";
+import Database from "./components/database/Database";
 import "./App.css";
 
 class App extends Component {
@@ -10,7 +11,8 @@ class App extends Component {
     this.state = {
       mainWindow: true,
       regestry: false,
-      login: false
+      login: false,
+      database: false
     };
   }
   handleOpenRegestry = () => {
@@ -46,21 +48,32 @@ class App extends Component {
       this.setState({regestry: false})
     }
   }
+  handleOpenDataBase = () =>{
+    const login = this.state
+    if(login) {
+      this.setState({login:false})
+      this.setState({database: true})
+    }
+  }
   render() {
     const { mainWindow } = this.state;
     const { regestry } = this.state;
-    const {login} = this.state
+    const {login} = this.state;
+    const {database} = this.state;
     return (
       <div className="app">
         {mainWindow && (
           <MainView openRegestry={() => this.handleOpenRegestry()} 
-                    openLogin={() => this.handleOpenLogin()}/>
+                    openLogin={() => this.handleOpenLogin()}
+                    openDataBase={() => this.handleOpenDataBase()}/>
         )}
         {regestry && (
           <Regestry colseRegestry={() => this.handleCloseRegestry()} />
         )}
         {login && (
-         <Login closeLoginWindow={() => this.handleCloseLogin()}/>)}
+         <Login closeLoginWindow={() => this.handleCloseLogin()}
+         openDataBase={() => this.handleOpenDataBase()}/>)}
+        {database && <Database />}
       </div>
     )
   }

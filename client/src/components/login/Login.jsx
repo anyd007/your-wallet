@@ -32,7 +32,7 @@ const checkValidLogin = () =>{
     let logInput = document.querySelectorAll(".logInput")
     if(getRegData.map(el=>el.username).includes(loginCheck.username)===true && 
     getRegData.map(el=>el.password).includes(loginCheck.password)===true){
-        console.log('ok');
+      props.openDataBase()
         setLoginCheck((prev) => ({
             ...prev,
             username: '',
