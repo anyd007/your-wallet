@@ -33,15 +33,14 @@ background: linear-gradient(to right, #0a6e0a, #000000); /* W3C, IE 10+/ Edge, F
  display: flex;
   margin-top: 3%;
 }
-.optionIncomeGroup, .inputIncomeGroup{
-  width: 50%;
+.optionIncomeGroup, .inputIncomeGroup, .sumIncomeGroup{
+  width: 40%;
 }
 .incomeInput{
   margin: 10px;
-  width: 30%;
+  width: 50%;
 }
 select{
-  background: transparent;
   margin-top: 7px;
   text-align: center;
   font-family: "Roboto", sans-serif;
@@ -52,14 +51,50 @@ select{
   border-bottom: 1px solid white;
   transition: 0.5s ease all;
   cursor: pointer;
-  width: 35%;
+  width: 55%;
 }
 select:focus {
   outline: none;
   border-bottom: 3px solid #ffd700;
 }
 option{
-  width: 30%;
+
   background-color:#0a6e0a;
   cursor: pointer;
+}
+.sumIncomeGroup{
+  text-align: center;
+}
+.sumIncome{
+  font-family: "Roboto", sans-serif;
+  font-size: 25px;
+  color: white;
+  border-bottom: 1px solid white
+}
+table{
+  width: 100%;
+  text-align: center;
+}
+thead{
+  color: #ffd700;
+  font-size: 25px;
+  font-family: "Roboto", sans-serif;
+  text-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px,
+    rgba(0, 0, 0, 0.22) 0px 10px 10px;
+}
+tbody{
+  color: white;
+  font-size: 20px;
+  font-family: "Roboto", sans-serif;
+  text-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px,
+    rgba(0, 0, 0, 0.22) 0px 10px 10px;
+}
+.addButton{
+  text-align: center;
+  margin-bottom: 3%;
+}
+.addIncomeBtn{
+  border: solid 2px #FFD700;
+  font-size: 20px;
+  padding: 10px;
 }

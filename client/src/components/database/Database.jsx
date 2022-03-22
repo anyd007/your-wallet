@@ -3,7 +3,7 @@ import "./database.css"
 
 
 const Database = props =>{
-    const [incomeOption, setIncomeOption] = React.useState([])
+    const [incomeOption, setIncomeOption] = React.useState([]) //wybór form wpływu
     React.useEffect(()=>{
         setIncomeOption([
            { option: "wypłata"},
@@ -13,7 +13,9 @@ const Database = props =>{
            {option: "inne"}
         ])
     },[])
-    console.log(incomeOption.map(el=>el.option));
+    //pobieranie daty
+    const currentDate = new Date();
+    const date = `${currentDate.getDate()}/${currentDate.getMonth()+1}/${currentDate.getFullYear()}`;
     return(
         <div className="databaseMainContener">
             <div className="databaseBackground"></div>
@@ -32,6 +34,30 @@ const Database = props =>{
                    {incomeOption.map(el=>(<option>{el.option}</option>))}
                 </select>
                </div>
+               <div className="sumIncomeGroup">
+                   <p style={{display:"none"}} className="sumIncome">{`DATA WPŁATY:  ${date}`}</p>
+               </div>
+            </div>
+            <div className="addButton">
+               <button className="btn addIncomeBtn" type="button">DODAJ</button>
+               </div>
+            <div className="viewGroup">
+                <table>
+                    <thead>
+                        <tr>
+                            <td>KWOTA WPŁATY</td>
+                            <td>RODZAJ PRZYCHODU</td>
+                            <td>DATA PRZYCHODU</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1000</td>
+                            <td>test</td>
+                            <td>22.2.22</td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
     )
