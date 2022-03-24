@@ -29,16 +29,19 @@ React.useEffect(()=>{
 },[])
 //sprawdzanie poprawności logowanie
 const checkValidLogin = () =>{
+    setLoginCheck((prev) => ({
+        ...prev,
+        username: '',
+        password: '',
+        id:''
+    }))
     let logInput = document.querySelectorAll(".logInput")
     if(getRegData.map(el=>el.username).includes(loginCheck.username)===true && 
     getRegData.map(el=>el.password).includes(loginCheck.password)===true){
-      props.openDataBase()
-        setLoginCheck((prev) => ({
-            ...prev,
-            username: '',
-            password: '',
-            id:''
-        }))
+        loginCheck.id = getRegData.filter(el=>el.username === loginCheck.username).map(el=>el.id) //przypisanie id usera i przesłanie do bazy danych
+        props.openDataBase()
+        props.sendId(loginCheck.id)
+       
     }else{
         logInput.forEach(el=>{
             el.classList.add("errorInput")

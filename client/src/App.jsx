@@ -12,7 +12,8 @@ class App extends Component {
       mainWindow: true,
       regestry: false,
       login: false,
-      database: false
+      database: false,
+      regId: ''
     };
   }
   handleOpenRegestry = () => {
@@ -55,11 +56,17 @@ class App extends Component {
       this.setState({database: true})
     }
   }
+  handleSendId = (val) =>{
+    this.setState({
+      regId: val
+    })
+  }
   render() {
     const { mainWindow } = this.state;
     const { regestry } = this.state;
     const {login} = this.state;
     const {database} = this.state;
+    const {regId} = this.state
     return (
       <div className="app">
         {mainWindow && (
@@ -72,8 +79,9 @@ class App extends Component {
         )}
         {login && (
          <Login closeLoginWindow={() => this.handleCloseLogin()}
-         openDataBase={() => this.handleOpenDataBase()}/>)}
-        {database && <Database />}
+         openDataBase={() => this.handleOpenDataBase()}
+         sendId={this.handleSendId}/>)}
+        {database && <Database getIdFromLogin={regId} />}
       </div>
     )
   }

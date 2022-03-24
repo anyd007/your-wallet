@@ -62,15 +62,6 @@ option{
   background-color:#0a6e0a;
   cursor: pointer;
 }
-.sumIncomeGroup{
-  text-align: center;
-}
-.sumIncome{
-  font-family: "Roboto", sans-serif;
-  font-size: 25px;
-  color: white;
-  border-bottom: 1px solid white
-}
 table{
   width: 100%;
   text-align: center;
@@ -97,4 +88,22 @@ tbody{
   border: solid 2px #FFD700;
   font-size: 20px;
   padding: 10px;
+}
+.commentIncomeGroup{
+  text-align: center;
+  width: 45%;
+}
+.commentIncome{
+  resize: none;
+  width: 90%;
+  height: 70px;
+  background: transparent;
+  font-family: "Roboto", sans-serif;
+  color: white;
+  font-size: 17px;
+  border: 1px solid white;
+  border-radius: 10px;
+}
+.commentIncome:focus{
+  border: 2px solid #FFD700;
 }
