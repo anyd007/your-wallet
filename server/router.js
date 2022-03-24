@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router()
-const usersData = require("./users/users");
+const usersDataIncome = require("./users/users_income");
 const regUsers = require("./regestry/regestry")
 
 router.get("/regestry", async (req,res)=>{
@@ -18,18 +18,18 @@ router.post("/regestry", async (req,res)=>{
     res.send.post;
 })
 
-router.get("/users", async (req,res)=>{
-    const mongo_user = await usersData.find();
-    res.send(mongo_user);
+router.get("/users_income", async (req,res)=>{
+    const mongo_user_income = await usersDataIncome.find();
+    res.send(mongo_user_income);
 })
-router.post("/users", async (req,res)=>{
-    const post = new usersData({
+router.post("/users_income", async (req,res)=>{
+    const post = new usersDataIncome({
+        id: req.body.id,
         income: req.body.income,
-        income_sum: req.body.income_sum,
-        outcome: req.body.outcome,
-        outcome_sum: req.body.outcome_sum,
-        income_comment: req.body.income_comment,
-        outcome_comment: req.body.outcome_comment,
+        income_summary: req.body.income_summary,
+        income_choose: req.body.income_choose,
+        income_date: req.body.income_date,
+        income_comment: req.body.income_comment
     })
     await post.save();
     res.send.post;
