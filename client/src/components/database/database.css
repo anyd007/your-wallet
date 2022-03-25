@@ -120,5 +120,12 @@ tbody{
 }
 .summaryTD{
   font-size: 30px;
-  
+}
+
+.incomeTD{
+  font-size: 25px;
+  border: 1px solid #FFD700;
+}
+tr.incomeTR>td {
+  padding-bottom: 1em;
 }

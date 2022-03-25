@@ -59,7 +59,8 @@ const Database = props =>{
 
     //button który wysła dane na backend oraz czyci pola inputów
     const getIncomeDataBtn = () =>{
-        userDataIncome.income_summary = Number(userDataIncome.income) + Number(userDataIncome.income_summary) //sumowanie daych z kwot wporwadzonych przez usera
+        userDataIncome.income_date = date
+        userDataIncome.income_summary = Number(userDataIncome.income) //sumowanie daych z kwot wporwadzonych przez usera
         sendIncomeDataToBackEnd(userDataIncome.income, userDataIncome.income_choose, userDataIncome.income_summary, userDataIncome.income_date, userDataIncome.income_comment)
         setUserDataIncome(prev=>({
             ...prev,
@@ -68,8 +69,25 @@ const Database = props =>{
             income_date: '',  
             income_comment: ''
         }))
+        getUserData()
     }
-  
+    //pobieranie danych z przychodów usera
+    const [getIncomeData, setIncomeData] = React. useState([])
+    console.log(getIncomeData);
+    const getUserData = async () =>{
+        try {
+             await axios
+             .get("api/users_income")
+             .then(res => res.data)
+             .then(data => data.filter(item => {return item.id === individualIdFromReg}))
+             .then(data => setIncomeData(data))
+
+        } catch (error) {
+            console.log("error", error);
+        }
+     }
+    
+        
     return(
         <div className="databaseMainContener">
             <div className="databaseBackground"></div>
@@ -141,12 +159,12 @@ const Database = props =>{
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
+                        {getIncomeData.map(el =>(<tr key={el._id} className="incomeTR">
+                            <td className="incomeTD">{el.income} PLN</td>
+                            <td className="incomeTD">{el.income_choose}</td>
+                            <td className="incomeTD">{el.income_date}</td>
+                            <td className="incomeTD">{el.income_comment}</td>
+                        </tr>))}
                     </tbody>
                 </table>
             </section>
