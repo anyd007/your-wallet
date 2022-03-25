@@ -28,9 +28,9 @@ const Database = props =>{
     const [userDataIncome, setUserDataIncome] = React.useState({
     income: '',
     income_choose: '',
-    income_summary: '',
     income_date: '',  
-    income_comment: ''
+    income_comment: '',
+    income_summary:''
     })
     const getInputData = e =>{
         const {name,value} = e.target;
@@ -39,8 +39,9 @@ const Database = props =>{
                 [name]: value
         }))
     }
+         
     //wysyłanie daych wproadzonych przez usera na server
-    const sendIncomeDataToBackEnd = (income, income_choose, income_summary, income_date ,income_comment) =>{
+     const sendIncomeDataToBackEnd = (income, income_choose, income_summary, income_date ,income_comment) =>{
             fetch("api/users_income",{
                 method: "POST",
                 body: JSON.stringify({
@@ -54,10 +55,11 @@ const Database = props =>{
                 headers: { "Content-type": "application/json" }
             })
     }
-  
+    console.log(userDataIncome.income_summary);
+
     //button który wysła dane na backend oraz czyci pola inputów
     const getIncomeDataBtn = () =>{
-        test()
+        userDataIncome.income_summary = Number(userDataIncome.income) + Number(userDataIncome.income_summary) //sumowanie daych z kwot wporwadzonych przez usera
         sendIncomeDataToBackEnd(userDataIncome.income, userDataIncome.income_choose, userDataIncome.income_summary, userDataIncome.income_date, userDataIncome.income_comment)
         setUserDataIncome(prev=>({
             ...prev,
@@ -67,18 +69,7 @@ const Database = props =>{
             income_comment: ''
         }))
     }
-      //sumowanie wszystkich przychodów usera
-      const [summaryIncome, setSummaryIncome] = React.useState({summary:0})
-      console.log(summaryIncome.summary);
-      const test = () => {
-          let userIncome = parseInt(userDataIncome.income)
-          setSummaryIncome((prev)=>({
-                  ...prev,
-                  summary:  userIncome + parseInt(prev.summary)
-          }))
-        }
-     
-
+  
     return(
         <div className="databaseMainContener">
             <div className="databaseBackground"></div>
@@ -132,7 +123,7 @@ const Database = props =>{
                     </thead>
                     <tbody>
                         <tr>
-                            <td className="summaryTD">{`${summaryIncome.summary} PLN`}</td>
+                            <td className="summaryTD">{` PLN`}</td>
                             <td className="summaryTD">test</td>
                             <button className="btn outcomeBtn" type="button">WYDATKI</button>
                         </tr>
