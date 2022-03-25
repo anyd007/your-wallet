@@ -55,8 +55,6 @@ const Database = props =>{
                 headers: { "Content-type": "application/json" }
             })
     }
-    console.log(userDataIncome.income_summary);
-
     //button który wysła dane na backend oraz czyci pola inputów
     const getIncomeDataBtn = () =>{
         userDataIncome.income_date = date
@@ -69,11 +67,9 @@ const Database = props =>{
             income_date: '',  
             income_comment: ''
         }))
-        getUserData()
     }
     //pobieranie danych z przychodów usera
-    const [getIncomeData, setIncomeData] = React. useState([])
-    console.log(getIncomeData);
+    const[getIncomeData, setIncomeData] = React.useState([])
     const getUserData = async () =>{
         try {
              await axios
@@ -86,6 +82,12 @@ const Database = props =>{
             console.log("error", error);
         }
      }
+     React.useEffect(()=>{
+         window.addEventListener('mousemove', () => {getUserData()})
+        return() => {
+            window.removeEventListener('mousemove', () => {getUserData()})
+        }
+     }, [])
     
         
     return(
@@ -129,7 +131,8 @@ const Database = props =>{
                 </div>
             </section>
             <div className="addButton">
-               <button disabled={!userDataIncome.income || !userDataIncome.income_choose || userDataIncome.income <=0} onClick={() => getIncomeDataBtn()} className="btn addIncomeBtn" type="button">DODAJ</button>
+               <button disabled={!userDataIncome.income || !userDataIncome.income_choose || userDataIncome.income <=0} 
+               onClick={() => getIncomeDataBtn()} className="btn addIncomeBtn" type="button">DODAJ</button>
             </div>
             <section className="summaryGroup">
                 <table>
