@@ -4,8 +4,13 @@ import "./database.css"
 
 
 const Database = props =>{
-    const individualIdFromReg = props.getIdFromLogin.toString() //pobieranie id z rejestracji
-    console.log(individualIdFromReg);
+  //pobieranie daty
+  const currentDate = new Date();
+  const date = `${currentDate.getDate()}/${currentDate.getMonth()+1}/${currentDate.getFullYear()}`;
+
+  //pobieranie id usera przy logowaniu w celu porównania przy wyświtlaniu bazy danych
+  let individualIdFromReg = props.getIdFromLogin.toString()
+
     const [incomeOption, setIncomeOption] = React.useState([]) //wybór form wpływu
     React.useEffect(()=>{
         setIncomeOption([
@@ -13,6 +18,8 @@ const Database = props =>{
            { option: "wypłata"},
            { option: "darowizna"},
            {option: "wpłata własna"},
+           {option: "renta"},
+           {option: "emerytura"},
            {option: "zasiłek"},
            {option: "inne"}
         ])
@@ -22,7 +29,7 @@ const Database = props =>{
     income: '',
     income_choose: '',
     income_summary: '',
-    income_date: '',
+    income_date: '',  
     income_comment: ''
     })
     const getInputData = e =>{
@@ -47,10 +54,16 @@ const Database = props =>{
                 headers: { "Content-type": "application/json" }
             })
     }
-  
+    //button który wysła dane na backend oraz czyci pola inputów
     const getIncomeDataBtn = () =>{
         sendIncomeDataToBackEnd(userDataIncome.income, userDataIncome.income_choose, userDataIncome.income_summary, userDataIncome.income_date, userDataIncome.income_comment)
-            console.log('brak blokady');
+        setUserDataIncome(prev=>({
+            ...prev,
+            income: '',
+            income_choose: '',
+            income_date: '',  
+            income_comment: ''
+        }))
     }
     //pobieranie danych z rejestracji
     const [userId, setUserId] = React.useState('')
@@ -59,9 +72,6 @@ const Database = props =>{
         .then(res => setUserId(res.data.map(el=>el.id)))
     },[])
 
-    //pobieranie daty
-    const currentDate = new Date();
-    const date = `${currentDate.getDate()}/${currentDate.getMonth()+1}/${currentDate.getFullYear()}`;
     return(
         <div className="databaseMainContener">
             <div className="databaseBackground"></div>
@@ -69,12 +79,14 @@ const Database = props =>{
                 <h2 className="databaseTitle">TWOJE FINANSOWE DANE</h2>
                 <p className="databaseInfo">wprowadzaj przychody oraz wydatki, planuj, oszczędzaj...</p>
             </div>
-            <div className="incomeGroup">
+            <section className="incomeGroup">
                 <div className="inputIncomeGroup">
                     <label htmlFor="income">WPROWADŹ KWOTĘ PRZYCHODU</label><br />
                     <input 
                     className="incomeInput" 
                     type="number" 
+                    min="1"
+                    step=".01"
                     name="income"
                     value={userDataIncome.income}
                     onChange={getInputData}/>
@@ -90,7 +102,7 @@ const Database = props =>{
                 </select>
                </div>
                 <div className="commentIncomeGroup">
-                    <label htmlFor="income_comment">DODAJ KOMENTARZ (max 100 znaków)</label>
+                    <label htmlFor="income_comment">KOMENTARZ (max 100 znaków)</label>
                     <textarea 
                     className="commentIncome" 
                     name="income_comment" 
@@ -99,11 +111,28 @@ const Database = props =>{
                     value={userDataIncome.income_comment}
                     onChange={getInputData}/>
                 </div>
-            </div>
+            </section>
             <div className="addButton">
-               <button disabled={!userDataIncome.income || !userDataIncome.income_choose} onClick={() => getIncomeDataBtn()} className="btn addIncomeBtn" type="button">DODAJ</button>
-               </div>
-            <div className="viewGroup">
+               <button disabled={!userDataIncome.income || !userDataIncome.income_choose || userDataIncome.income <=0} onClick={() => getIncomeDataBtn()} className="btn addIncomeBtn" type="button">DODAJ</button>
+            </div>
+            <section className="summaryGroup">
+                <table>
+                    <thead>
+                        <tr>
+                            <td>ŁĄCZNA KWOTA PRZYCHODU</td>
+                            <td>POZOSTAŁA KWOTA PO WYDATKACH</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>test</td>
+                            <td>test</td>
+                            <button className="btn outcomeBtn" type="button">WYDATKI</button>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+            <section className="viewGroup">
                 <table>
                     <thead>
                         <tr>
@@ -122,7 +151,7 @@ const Database = props =>{
                         </tr>
                     </tbody>
                 </table>
-            </div>
+            </section>
         </div>
     )
 }

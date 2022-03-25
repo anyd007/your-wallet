@@ -28,6 +28,9 @@ background: linear-gradient(to right, #0a6e0a, #000000); /* W3C, IE 10+/ Edge, F
   text-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px,
     rgba(0, 0, 0, 0.22) 0px 10px 10px;
 }
+label{
+  font-size: 25px;
+}
 .incomeGroup{
   text-align: center;
  display: flex;
@@ -106,4 +109,12 @@ tbody{
 }
 .commentIncome:focus{
   border: 2px solid #FFD700;
+}
+.summaryGroup{
+  margin-bottom: 5%;
+}
+.outcomeBtn{
+  border: solid 2px #FFD700;
+  font-size: 20px;
+  padding: 10px;
 }
