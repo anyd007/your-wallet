@@ -54,8 +54,10 @@ const Database = props =>{
                 headers: { "Content-type": "application/json" }
             })
     }
+  
     //button który wysła dane na backend oraz czyci pola inputów
     const getIncomeDataBtn = () =>{
+        test()
         sendIncomeDataToBackEnd(userDataIncome.income, userDataIncome.income_choose, userDataIncome.income_summary, userDataIncome.income_date, userDataIncome.income_comment)
         setUserDataIncome(prev=>({
             ...prev,
@@ -65,12 +67,17 @@ const Database = props =>{
             income_comment: ''
         }))
     }
-    //pobieranie danych z rejestracji
-    const [userId, setUserId] = React.useState('')
-    React.useEffect(()=>{
-        axios.get("/api/regestry")
-        .then(res => setUserId(res.data.map(el=>el.id)))
-    },[])
+      //sumowanie wszystkich przychodów usera
+      const [summaryIncome, setSummaryIncome] = React.useState({summary:0})
+      console.log(summaryIncome.summary);
+      const test = () => {
+          let userIncome = parseInt(userDataIncome.income)
+          setSummaryIncome((prev)=>({
+                  ...prev,
+                  summary:  userIncome + parseInt(prev.summary)
+          }))
+        }
+     
 
     return(
         <div className="databaseMainContener">
@@ -125,8 +132,8 @@ const Database = props =>{
                     </thead>
                     <tbody>
                         <tr>
-                            <td>test</td>
-                            <td>test</td>
+                            <td className="summaryTD">{`${summaryIncome.summary} PLN`}</td>
+                            <td className="summaryTD">test</td>
                             <button className="btn outcomeBtn" type="button">WYDATKI</button>
                         </tr>
                     </tbody>
