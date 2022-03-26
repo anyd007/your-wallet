@@ -1,6 +1,7 @@
 import React from "react";
 import axios from "axios"
 import "./database.css"
+import reactReveal from "react-reveal";
 
 
 const Database = props =>{
@@ -67,29 +68,37 @@ const Database = props =>{
             income_date: '',  
             income_comment: ''
         }))
+        userData()
     }
     //pobieranie danych z przychodów usera
     const[getIncomeData, setIncomeData] = React.useState([])
-    const getUserData = async () =>{
-        try {
-             await axios
-             .get("api/users_income")
-             .then(res => res.data)
-             .then(data => data.filter(item => {return item.id === individualIdFromReg}))
-             .then(data => setIncomeData(data))
-
-        } catch (error) {
-            console.log("error", error);
+    const userData = () =>{
+        axios
+        .get("api/users_income")
+        .then(res => res.data)
+        .then(data => data.filter(item => {return item.id === individualIdFromReg}))
+        .then(data => setIncomeData(data))
+         .catch ((err)=> {
+            console.log(err)
+            })
         }
-     }
-     React.useEffect(()=>{
-         window.addEventListener('mousemove', () => {getUserData()})
-        return() => {
-            window.removeEventListener('mousemove', () => {getUserData()})
-        }
-     }, [])
+    React.useEffect(()=>{
+        userData()
+    },[])
+    //  React.useEffect(()=>{
+    //     const controller = new AbortController();
+    //    axios
+    //          .get("api/users_income" , { signal: controller.signal })
+    //          .then(res => res.data)
+    //          .then(data => data.filter(item => {return item.id === individualIdFromReg}))
+    //          .then(data => setIncomeData(data))
+    //           .catch ((err)=> {
+    //              console.log(err)
+    //              })
+    //      return () => controller.abort();
+    //  },[individualIdFromReg])
     
-        
+    
     return(
         <div className="databaseMainContener">
             <div className="databaseBackground"></div>
