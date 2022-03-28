@@ -30,8 +30,7 @@ const Database = props =>{
     income: '',
     income_choose: '',
     income_date: '',  
-    income_comment: '',
-    income_summary:''
+    income_comment: ''
     })
     const getInputData = e =>{
         const {name,value} = e.target;
@@ -42,14 +41,13 @@ const Database = props =>{
     }
          
     //wysyłanie daych wproadzonych przez usera na server
-     const sendIncomeDataToBackEnd = (income, income_choose, income_summary, income_date ,income_comment) =>{
+     const sendIncomeDataToBackEnd = (income, income_choose, income_date ,income_comment) =>{
             fetch("api/users_income",{
                 method: "POST",
                 body: JSON.stringify({
                     id: individualIdFromReg,
                     income: income,
                     income_choose: income_choose,
-                    income_summary: income_summary,
                     income_date: income_date,
                     income_comment: income_comment
                 }),
@@ -60,7 +58,7 @@ const Database = props =>{
     const getIncomeDataBtn = () =>{
         userDataIncome.income_date = date
         userDataIncome.income_summary = Number(userDataIncome.income) //sumowanie daych z kwot wporwadzonych przez usera
-        sendIncomeDataToBackEnd(userDataIncome.income, userDataIncome.income_choose, userDataIncome.income_summary, userDataIncome.income_date, userDataIncome.income_comment)
+        sendIncomeDataToBackEnd(userDataIncome.income, userDataIncome.income_choose, userDataIncome.income_date, userDataIncome.income_comment)
         setUserDataIncome(prev=>({
             ...prev,
             income: '',
@@ -69,8 +67,10 @@ const Database = props =>{
             income_comment: ''
         }))
         userData()
+   
+       
     }
-    //pobieranie danych z przychodów usera
+    //pobieranie danych z przychodów usera z express, oraz wstawianie ich w pola tabeli
     const[getIncomeData, setIncomeData] = React.useState([])
     const userData = () =>{
         axios
@@ -85,19 +85,15 @@ const Database = props =>{
     React.useEffect(()=>{
         userData()
     },[])
-    //  React.useEffect(()=>{
-    //     const controller = new AbortController();
-    //    axios
-    //          .get("api/users_income" , { signal: controller.signal })
-    //          .then(res => res.data)
-    //          .then(data => data.filter(item => {return item.id === individualIdFromReg}))
-    //          .then(data => setIncomeData(data))
-    //           .catch ((err)=> {
-    //              console.log(err)
-    //              })
-    //      return () => controller.abort();
-    //  },[individualIdFromReg])
-    
+    //sumowanie wpływów usera
+    const [summary, setSummary] = React.useState([])
+    const getSum = () =>{
+        let setSum = getIncomeData.map(el=>{return el.income}).reduce((prev, curr)=> prev + curr, 0)
+        setSummary(`${setSum} PLN`)
+        }
+    React.useEffect(()=>{
+        getSum()
+    },[getIncomeDataBtn])
     
     return(
         <div className="databaseMainContener">
@@ -116,7 +112,8 @@ const Database = props =>{
                     step=".01"
                     name="income"
                     value={userDataIncome.income}
-                    onChange={getInputData}/>
+                    onChange={getInputData}
+                    />
                 </div>
                 <div className="optionIncomeGroup">
                     <label htmlFor="income_choose">WYBIERZ RODZAJ PRZYCHODU</label><br />
@@ -153,7 +150,7 @@ const Database = props =>{
                     </thead>
                     <tbody>
                         <tr>
-                            <td className="summaryTD">{` PLN`}</td>
+                            <td className="summaryTD">{summary}</td>
                             <td className="summaryTD">test</td>
                             <button className="btn outcomeBtn" type="button">WYDATKI</button>
                         </tr>

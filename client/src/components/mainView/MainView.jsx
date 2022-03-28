@@ -16,7 +16,6 @@ const mainView = (props) => {
       <div className="groupBtn">
          <Zoom><button onClick={()=>props.openLogin()} type="button" className="btn">LOGOWANIE</button></Zoom>
           <Zoom><button onClick={()=>props.openRegestry()} type="button" className="btn">REJESTRACJA</button></Zoom>
-          <button onClick={() => props.openDataBase()} className="btn">test</button>
       </div>
     </div>
   );
