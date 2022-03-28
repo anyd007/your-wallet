@@ -2,6 +2,7 @@ import React from "react";
 import axios from "axios"
 import "./database.css"
 import reactReveal from "react-reveal";
+import {RiDeleteBin2Fill} from "react-icons/ri"
 
 
 const Database = props =>{
@@ -41,7 +42,7 @@ const Database = props =>{
     }
          
     //wysyłanie daych wproadzonych przez usera na server
-     const sendIncomeDataToBackEnd = (income, income_choose, income_date ,income_comment) =>{
+     const sendIncomeDataToBackEnd = (income, income_choose, income_date ,income_comment, income_summary) =>{
             fetch("api/users_income",{
                 method: "POST",
                 body: JSON.stringify({
@@ -49,7 +50,8 @@ const Database = props =>{
                     income: income,
                     income_choose: income_choose,
                     income_date: income_date,
-                    income_comment: income_comment
+                    income_comment: income_comment,
+                    income_summary: income_summary //wysłanie informacji o zsumowancyh wpływach
                 }),
                 headers: { "Content-type": "application/json" }
             })
@@ -57,8 +59,8 @@ const Database = props =>{
     //button który wysła dane na backend oraz czyci pola inputów
     const getIncomeDataBtn = () =>{
         userDataIncome.income_date = date
-        userDataIncome.income_summary = Number(userDataIncome.income) //sumowanie daych z kwot wporwadzonych przez usera
-        sendIncomeDataToBackEnd(userDataIncome.income, userDataIncome.income_choose, userDataIncome.income_date, userDataIncome.income_comment)
+        // userDataIncome.income_summary = summary //sumowanie daych z kwot wporwadzonych przez usera
+        sendIncomeDataToBackEnd(userDataIncome.income, userDataIncome.income_choose, userDataIncome.income_date, userDataIncome.income_comment, userDataIncome.income_summary)
         setUserDataIncome(prev=>({
             ...prev,
             income: '',
@@ -85,15 +87,23 @@ const Database = props =>{
     React.useEffect(()=>{
         userData()
     },[])
+
     //sumowanie wpływów usera
     const [summary, setSummary] = React.useState([])
     const getSum = () =>{
         let setSum = getIncomeData.map(el=>{return el.income}).reduce((prev, curr)=> prev + curr, 0)
-        setSummary(`${setSum} PLN`)
+        setSummary(setSum)
         }
     React.useEffect(()=>{
         getSum()
     },[getIncomeDataBtn])
+
+    //kasowanie danych
+   const deletePosition = (_id) => {
+        axios.delete(`api/users_income/${_id}`)
+        setIncomeData(getIncomeData.filter(item =>item._id !== `${_id}`))
+      }
+   
     
     return(
         <div className="databaseMainContener">
@@ -150,7 +160,7 @@ const Database = props =>{
                     </thead>
                     <tbody>
                         <tr>
-                            <td className="summaryTD">{summary}</td>
+                            <td className="summaryTD">{summary} PLN</td>
                             <td className="summaryTD">test</td>
                             <button className="btn outcomeBtn" type="button">WYDATKI</button>
                         </tr>
@@ -172,7 +182,8 @@ const Database = props =>{
                             <td className="incomeTD">{el.income} PLN</td>
                             <td className="incomeTD">{el.income_choose}</td>
                             <td className="incomeTD">{el.income_date}</td>
-                            <td className="incomeTD comment">{el.income_comment}</td>
+                            <td className="incomeTD comment">{el.income_comment}
+                            <RiDeleteBin2Fill type="button" className="deleteBtn" onClick={() => deletePosition(el._id)}/></td>
                         </tr>))}
                     </tbody>
                 </table>
