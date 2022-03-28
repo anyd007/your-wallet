@@ -172,7 +172,7 @@ const Database = props =>{
                             <td className="incomeTD">{el.income} PLN</td>
                             <td className="incomeTD">{el.income_choose}</td>
                             <td className="incomeTD">{el.income_date}</td>
-                            <td className="incomeTD">{el.income_comment}</td>
+                            <td className="incomeTD comment">{el.income_comment}</td>
                         </tr>))}
                     </tbody>
                 </table>
