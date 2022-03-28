@@ -91,7 +91,7 @@ let regexpCheck = new RegExp("^(?=.*[A-Z])(?=.*[!@#\$%\^&\*])(?=.{8,})");
       headers:{ "Content-type": "application/json" },
     })
   }
-  //pobieranie danych wcelu porównania czy nazwa użytkownika istnieje
+  //pobieranie danych w celu porównania czy nazwa użytkownika istnieje
   const [checkUser, setCheckUser] = React.useState('')
    React.useEffect(()=>{
       axios.get("/api/regestry")

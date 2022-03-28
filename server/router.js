@@ -34,4 +34,8 @@ router.post("/users_income", async (req,res)=>{
     await post.save();
     res.send.post;
 })
+router.delete("/users_income/:id", async (req, res)=>{
+    const result = await usersDataIncome.deleteOne({_id: req.params.id})
+    res.send(result)
+})
 module.exports = router
