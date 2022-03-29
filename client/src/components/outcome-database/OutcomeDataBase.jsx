@@ -17,7 +17,7 @@ const outcomeDataBase = (props) => {
     </section>
     <section className="outComeGroup">
      <Zoom><div className="outcomeInputs" >
-          <label htmlFor="outcome">WPROWADŹ KWOTĘ WYDATKU</label>
+          <label htmlFor="outcome">WPROWADŹ KWOTĘ WYDATKU</label><br />
           <input 
           id="outcome"
           className="inputsFeelds"
@@ -26,7 +26,7 @@ const outcomeDataBase = (props) => {
           min="1"/>
         </div></Zoom>
        <Zoom><div className="outcomeInputs">  
-          <label htmlFor="outcome-choose">WYBIERZ RODZAJ WYDATKU</label>
+          <label htmlFor="outcome-choose">WYBIERZ RODZAJ WYDATKU</label><br />
           <input
           id="outcome-choose"
           className="inputsFeelds"
@@ -34,7 +34,7 @@ const outcomeDataBase = (props) => {
           type="text"/>
         </div></Zoom>
        <Zoom><div className="outcomeInputs" >
-          <label htmlFor="outcome-date">WPROWADŹ DATE WYDATKU</label>
+          <label htmlFor="outcome-date">WPROWADŹ DATĘ WYDATKU</label><br />
           <input 
           id="outcome-date"
           className="inputsFeelds"
@@ -42,7 +42,7 @@ const outcomeDataBase = (props) => {
           type="date"/>
         </div></Zoom>
         <Zoom><div className="outcomeInputs" >
-          <label htmlFor="outcome-comment">KOMENTARZ (max 100 znaków)</label>
+          <label htmlFor="outcome-comment">KOMENTARZ (max 100 znaków)</label><br />
           <textarea 
           id="outcome-comment"
           className="inputsFeelds"
