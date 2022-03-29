@@ -3,6 +3,7 @@ import axios from "axios"
 import "./database.css"
 import reactReveal from "react-reveal";
 import {RiDeleteBin2Fill} from "react-icons/ri"
+import {CgCloseR} from "react-icons/cg"
 
 
 const Database = props =>{
@@ -107,6 +108,7 @@ const Database = props =>{
     
     return(
         <div className="databaseMainContener">
+            <CgCloseR onClick={() => props.colseDatabase()} className="closeIcon"/>
             <div className="databaseBackground"></div>
             <div className="titleGroup">
                 <h2 className="databaseTitle">TWOJE FINANSOWE DANE</h2>
@@ -149,6 +151,7 @@ const Database = props =>{
             <div className="addButton">
                <button disabled={!userDataIncome.income || !userDataIncome.income_choose || userDataIncome.income <=0} 
                onClick={() => getIncomeDataBtn()} className="btn addIncomeBtn" type="button">DODAJ</button>
+               <button onClick={() => props.colseDatabase()} className="btn closeIncomeBtn">WYJDŹ</button>
             </div>
             <section className="summaryGroup">
                 <table>

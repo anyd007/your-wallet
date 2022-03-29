@@ -87,7 +87,7 @@ tbody{
   text-align: center;
   margin-bottom: 3%;
 }
-.addIncomeBtn{
+.addIncomeBtn, .closeIncomeBtn{
   border: solid 2px #FFD700;
   font-size: 20px;
   padding: 10px;
@@ -148,4 +148,16 @@ tr.incomeTR>td {
 .incomeTR:hover .deleteBtn{
  visibility: visible;
  opacity: 1;
+}
+.closeIcon{
+  cursor: pointer;
+  position: absolute;
+  right: 1%;
+  color: white;
+  font-size: 35px;
+  transition: transform .4s;
+}
+.closeIcon:hover{
+  color: tomato;
+  transform: scale(1.5);
 }

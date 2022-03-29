@@ -56,7 +56,14 @@ class App extends Component {
       this.setState({database: true})
     }
   }
-  handleSendId = (val) =>{
+  handleCloseDatabase = () =>{
+    const database = this.state
+    if(database){
+      this.setState({database:false})
+      this.setState({mainWindow: true})
+    }
+  }
+  handleSendId = (val) =>{ //przekazywanie id z panelu rejestracji do regID
     this.setState({
       regId: val
     })
@@ -80,8 +87,11 @@ class App extends Component {
         {login && (
          <Login closeLoginWindow={() => this.handleCloseLogin()}
          openDataBase={() => this.handleOpenDataBase()}
-         sendId={this.handleSendId}/>)}
-        {database && <Database getIdFromLogin={regId} />}
+         //odbieranie id z panelu logowanie w celu przypisania w panelu bazy danych
+         sendId={this.handleSendId}/>)}   
+        {database && <Database 
+        getIdFromLogin={regId} //wysłanie pozyskanego ID do panelu bazy danych
+        colseDatabase={() => this.handleCloseDatabase()}/>} 
       </div>
     )
   }
