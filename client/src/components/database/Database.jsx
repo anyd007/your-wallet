@@ -4,6 +4,7 @@ import "./database.css"
 import reactReveal from "react-reveal";
 import {RiDeleteBin2Fill} from "react-icons/ri"
 import {CgCloseR} from "react-icons/cg"
+import Zoom from "react-reveal/Zoom";
 
 
 const Database = props =>{
@@ -111,8 +112,8 @@ const Database = props =>{
             <CgCloseR onClick={() => props.colseDatabase()} className="closeIcon"/>
             <div className="databaseBackground"></div>
             <div className="titleGroup">
-                <h2 className="databaseTitle">TWOJE FINANSOWE DANE</h2>
-                <p className="databaseInfo">wprowadzaj przychody oraz wydatki, planuj, oszczędzaj...</p>
+                <h2 className="databaseTitle"><Zoom left cascade>TWOJE FINANSOWE DANE</Zoom></h2>
+                <Zoom><p className="databaseInfo">wprowadzaj przychody oraz wydatki, planuj, oszczędzaj...</p></Zoom>
             </div>
             <section className="incomeGroup">
                 <div className="inputIncomeGroup">
@@ -165,7 +166,7 @@ const Database = props =>{
                         <tr>
                             <td className="summaryTD">{summary} PLN</td>
                             <td className="summaryTD">test</td>
-                            <button className="btn outcomeBtn" type="button">WYDATKI</button>
+                            <button onClick={() => props.openOutcomeDataBase()} className="btn outcomeBtn" type="button">WYDATKI</button>
                         </tr>
                     </tbody>
                 </table>

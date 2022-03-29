@@ -3,6 +3,7 @@ import MainView from "./components/mainView/MainView";
 import Regestry from "./components/regestry/Regestry";
 import Login from "./components/login/Login";
 import Database from "./components/database/Database";
+import OutcomeDataBase from "./components/outcome-database/OutcomeDataBase";
 import "./App.css";
 
 class App extends Component {
@@ -13,6 +14,7 @@ class App extends Component {
       regestry: false,
       login: false,
       database: false,
+      outcomeDataBase: false,
       regId: ''
     };
   }
@@ -63,6 +65,20 @@ class App extends Component {
       this.setState({mainWindow: true})
     }
   }
+  handleOpenOutcomeDataBase = () =>{
+    const database = this.state
+    if(database){
+      this.setState({database: false})
+      this.setState({outcomeDataBase: true})
+    }
+  }
+  handlecloseOutcomeDatabase = () =>{
+    const outcomeDataBase = this.state
+    if(outcomeDataBase){
+      this.setState({outcomeDataBase:false})
+      this.setState({mainWindow:true})
+    }
+  }
   handleSendId = (val) =>{ //przekazywanie id z panelu rejestracji do regID
     this.setState({
       regId: val
@@ -74,6 +90,7 @@ class App extends Component {
     const {login} = this.state;
     const {database} = this.state;
     const {regId} = this.state
+    const {outcomeDataBase} = this.state
     return (
       <div className="app">
         {mainWindow && (
@@ -91,7 +108,10 @@ class App extends Component {
          sendId={this.handleSendId}/>)}   
         {database && <Database 
         getIdFromLogin={regId} //wysłanie pozyskanego ID do panelu bazy danych
-        colseDatabase={() => this.handleCloseDatabase()}/>} 
+        colseDatabase={() => this.handleCloseDatabase()}
+        openOutcomeDataBase={()=> this.handleOpenOutcomeDataBase()}/>} 
+        {outcomeDataBase &&<OutcomeDataBase 
+        closeOutcomeDatabase={() => this.handlecloseOutcomeDatabase()}/>}
       </div>
     )
   }
