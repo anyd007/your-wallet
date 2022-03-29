@@ -1,0 +1,24 @@
+.outComeGroup{
+    display: flex;
+    text-align: center;
+    width: 100%;
+    margin-top: 3%;
+}
+.inputsFeelds{
+    margin-top: 15px;
+    width: 60%;
+}
+#outcome-comment{
+  resize: none;
+  width: 90%;
+  height: 70px;
+  background: transparent;
+  font-family: "Roboto", sans-serif;
+  color: white;
+  font-size: 17px;
+  border: 1px solid white;
+  border-radius: 10px;
+}
+input[type="date"]{
+    color: white;
+}
