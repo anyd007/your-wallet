@@ -150,6 +150,7 @@ tr.incomeTR>td {
  opacity: 1;
 }
 .closeIcon{
+  z-index: 3;
   cursor: pointer;
   position: absolute;
   right: 1%;

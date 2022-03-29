@@ -19,6 +19,6 @@
   border: 1px solid white;
   border-radius: 10px;
 }
-input[type="date"]{
-    color: white;
+.outcomeInputs{
+    width: 25%;
 }
