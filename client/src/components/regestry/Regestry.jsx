@@ -21,8 +21,10 @@ let regexpCheck = new RegExp("^(?=.*[A-Z])(?=.*[!@#\$%\^&\*])(?=.{8,})");
       [name]: value,
     }));
   };
+
   // sprwadzanie poprawności wprowadzanych danych w inputów
   const regestryBtn = () =>{
+  
     let usernameInput = document.querySelector(".usernameInput")
     let passwordInput = document.querySelector('.passwordInput')
     let repasswordInput = document.querySelector('.repasswordInput')
@@ -30,15 +32,7 @@ let regexpCheck = new RegExp("^(?=.*[A-Z])(?=.*[!@#\$%\^&\*])(?=.{8,})");
     let regestrySucess = document.querySelector(".regestrySucess")
     let blur = document.querySelector(".blur")
 
-    if(regUser.password === regUser.repassword && regexpCheck.test(regUser.password) ==true 
-    && regUser.username.length >=3){
-      sendRegestryToExpress(regUser.username, regUser.password,regUser.id)
-      regestrySucess.style.display = "flex"
-      blur.style.display = "flex"
-      regInputs.forEach(el=>{
-        el.value =''
-      })
-    }if(regUser.username.length < 3){
+    if(regUser.username.length < 3){
       usernameInput.classList.add('errorInput')
       usernameInput.value = 'nazwa użytkownika musi zawierać przynajmniej 3 znaki'
       usernameInput.onclick = ()=>{
@@ -47,7 +41,7 @@ let regexpCheck = new RegExp("^(?=.*[A-Z])(?=.*[!@#\$%\^&\*])(?=.{8,})");
           el.classList.remove("errorInput")
         })
       }
-    }if(regexpCheck.test(regUser.password)==false){
+    }else if(regexpCheck.test(regUser.password)==false){
       passwordInput.classList.add('errorInput')
       passwordInput.value = 'hasło nie zawiera wymaganaych wartości'
       passwordInput.onclick = ()=>{
@@ -55,8 +49,7 @@ let regexpCheck = new RegExp("^(?=.*[A-Z])(?=.*[!@#\$%\^&\*])(?=.{8,})");
         passwordInput.value = ''
         repasswordInput.value = ''
       }
-    }
-    if(regUser.password !== regUser.repassword){
+    }else if(regUser.password !== regUser.repassword){
       passwordInput.classList.add('errorInput')
       repasswordInput.classList.add('errorInput')
       passwordInput.value = 'powtórzone hasło nie jest identyczne'
@@ -69,16 +62,33 @@ let regexpCheck = new RegExp("^(?=.*[A-Z])(?=.*[!@#\$%\^&\*])(?=.{8,})");
         repasswordInput.classList.remove("errorInput")
         repasswordInput.value = ''
       }
-  }
-  if(checkUser.includes(regUser.username)===true){  //wryfikacja czy nazwa istnieje
+  }else if(checkUser.includes(regUser.username)){  //wryfikacja czy nazwa istnieje
     usernameInput.classList.add('errorInput')
       usernameInput.value = 'ta nazwa użytkownika jest już zajęta, wybierz inną...'
+  console.log("to juz jest");
       usernameInput.onclick = () =>{
         usernameInput.classList.remove("errorInput")
         usernameInput.value = ''
       }
   }
+  else{
+    sendRegestryToExpress(regUser.username, regUser.password,regUser.id)
+      regestrySucess.style.display = "flex"
+      blur.style.display = "flex"
+      regInputs.forEach(el=>{
+        el.value =''
+      })
+    }
+  
+
 }
+ //pobieranie danych w celu porównania czy nazwa użytkownika istnieje
+ const [checkUser, setCheckUser] = React.useState('')
+ React.useEffect(()=>{
+    axios.get("/api/regestry")
+    .then(res => setCheckUser(res.data.map(el=>el.username)))
+  }, [])
+
 //wysyłąnie danych na express.js
   const sendRegestryToExpress = (username, password, id) =>{
     fetch("/api/regestry", {
@@ -91,12 +101,6 @@ let regexpCheck = new RegExp("^(?=.*[A-Z])(?=.*[!@#\$%\^&\*])(?=.{8,})");
       headers:{ "Content-type": "application/json" },
     })
   }
-  //pobieranie danych w celu porównania czy nazwa użytkownika istnieje
-  const [checkUser, setCheckUser] = React.useState('')
-   React.useEffect(()=>{
-      axios.get("/api/regestry")
-      .then(res => setCheckUser(res.data.map(el=>el.username)))
-    }, [])
     
 return (
     <div className="mainContener">

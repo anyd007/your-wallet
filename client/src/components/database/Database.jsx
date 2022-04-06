@@ -88,7 +88,7 @@ const Database = props =>{
         }
     React.useEffect(()=>{
         userData()
-    },[])
+    },[sendIncomeDataToBackEnd])
 
     //sumowanie wpływów usera
     const [summary, setSummary] = React.useState([])
