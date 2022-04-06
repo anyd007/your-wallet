@@ -4,8 +4,21 @@ import {CgCloseR} from "react-icons/cg"
 import "./outcomeDataBase.css";
 import { Zoom } from "react-reveal";
 
-const outcomeDataBase = (props) => {
-
+const OutcomeDataBase = (props) => {
+  const [outComeChoose, setOutComeChoose] = React.useState([])
+  React.useEffect(()=>{
+    setOutComeChoose([
+      {option: ''},
+      {option: "ZAKUPY"},
+      {option: "CZYNSZ"},
+      {option: "PRĄD"},
+      {option: "GAZ"},
+      {option: "WODA"},
+      {option: "INNE OPŁATY"},
+      {option: "LEKI"},
+      {option: "INNE"}
+    ])
+  }, [])
   return (
   <div className="outcomeMainContener">
       <CgCloseR onClick={() => props.closeOutcomeDatabase()} className="closeIcon" />
@@ -27,11 +40,12 @@ const outcomeDataBase = (props) => {
         </div></Zoom>
        <Zoom><div className="outcomeInputs">  
           <label htmlFor="outcome-choose">WYBIERZ RODZAJ WYDATKU</label><br />
-          <input
+          <select
           id="outcome-choose"
           className="inputsFeelds"
-          name="outcome-choose"
-          type="text"/>
+          name="outcome-choose">
+          {outComeChoose.map(el=>(<option>{el.option}</option>))}
+          </select>
         </div></Zoom>
        <Zoom><div className="outcomeInputs" >
           <label htmlFor="outcome-date">WPROWADŹ DATĘ WYDATKU</label><br />
@@ -54,4 +68,4 @@ const outcomeDataBase = (props) => {
   );
 };
 
-export default outcomeDataBase;
+export default OutcomeDataBase;
