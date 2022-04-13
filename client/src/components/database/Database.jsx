@@ -44,7 +44,7 @@ const Database = props =>{
     }
          
     //wysyłanie daych wproadzonych przez usera na server
-     const sendIncomeDataToBackEnd = (income, income_choose, income_date ,income_comment, income_summary) =>{
+     const sendIncomeDataToBackEnd = (income, income_choose, income_date ,income_comment) =>{
             fetch("api/users_income",{
                 method: "POST",
                 body: JSON.stringify({
@@ -52,8 +52,7 @@ const Database = props =>{
                     income: income,
                     income_choose: income_choose,
                     income_date: income_date,
-                    income_comment: income_comment,
-                    income_summary: income_summary //wysłanie informacji o zsumowancyh wpływach
+                    income_comment: income_comment
                 }),
                 headers: { "Content-type": "application/json" }
             })
@@ -61,8 +60,8 @@ const Database = props =>{
     //button który wysła dane na backend oraz czyci pola inputów
     const getIncomeDataBtn = () =>{
         userDataIncome.income_date = date
-        // userDataIncome.income_summary = summary //sumowanie daych z kwot wporwadzonych przez usera
-        sendIncomeDataToBackEnd(userDataIncome.income, userDataIncome.income_choose, userDataIncome.income_date, userDataIncome.income_comment, userDataIncome.income_summary)
+        sendIncomeDataToBackEnd(userDataIncome.income, userDataIncome.income_choose, 
+            userDataIncome.income_date, userDataIncome.income_comment, userDataIncome.income_summary)
         setUserDataIncome(prev=>({
             ...prev,
             income: '',
@@ -70,25 +69,30 @@ const Database = props =>{
             income_date: '',  
             income_comment: ''
         }))
-        userData()
-   
-       
-    }
+        setRefresh(true)
+        }
     //pobieranie danych z przychodów usera z express, oraz wstawianie ich w pola tabeli
     const[getIncomeData, setIncomeData] = React.useState([])
-    const userData = () =>{
-        axios
-        .get("api/users_income")
-        .then(res => res.data)
-        .then(data => data.filter(item => {return item.id === individualIdFromReg}))
-        .then(data => setIncomeData(data))
-         .catch ((err)=> {
-            console.log(err)
-            })
+    const [refresh, setRefresh] = React.useState(true);
+    console.log(getIncomeData);
+     const getData = async() =>{
+        try {
+      await  axios
+      .get("api/users_income")
+      .then(res => res.data)
+      .then(data => data.filter(item => {return item.id === individualIdFromReg}))
+      .then(data => setIncomeData(data))
         }
-    React.useEffect(()=>{
-        userData()
-    },[sendIncomeDataToBackEnd])
+        catch(err){
+            throw err
+        }
+        setRefresh(false)
+    }
+     React.useEffect(()=>{ 
+         getData()
+    }, [refresh])
+         
+        
 
     //sumowanie wpływów usera
     const [summary, setSummary] = React.useState([])
@@ -98,15 +102,27 @@ const Database = props =>{
         }
     React.useEffect(()=>{
         getSum()
-    },[getIncomeDataBtn])
+    },[getSum])
+    
+    //wywsłanie zsumowanych danych przychodu
+    const sendSummary = (summaryAfterOutcome) =>{
+        fetch("api/summary", {
+            method: "POST",
+            body: JSON.stringify({
+                id: individualIdFromReg,
+                summaryUser: summary,
+                summaryAfterOutcome:''
+            }),
+            headers: { "Content-type": "application/json" }
+        })
+    }
 
     //kasowanie danych
    const deletePosition = (_id) => {
         axios.delete(`api/users_income/${_id}`)
         setIncomeData(getIncomeData.filter(item =>item._id !== `${_id}`))
-      }
-   
-    
+   }
+
     return(
         <div className="databaseMainContener">
             <CgCloseR onClick={() => props.colseDatabase()} className="closeIcon"/>
@@ -164,7 +180,7 @@ const Database = props =>{
                     </thead>
                     <tbody>
                         <tr>
-                            <td className="summaryTD">{summary} PLN</td>
+                            <td className="summaryTD">{summary}PLN</td>
                             <td className="summaryTD">test</td>
                             <button onClick={() => props.openOutcomeDataBase()} className="btn outcomeBtn" type="button">WYDATKI</button>
                         </tr>

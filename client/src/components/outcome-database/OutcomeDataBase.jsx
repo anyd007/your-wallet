@@ -64,6 +64,22 @@ const OutcomeDataBase = (props) => {
           maxLength="100"/>
         </div></Zoom>
     </section>
+    <section className="summaryFromIncome">
+      <table>
+        <thead>
+          <tr>
+            <td>ŁĄCZNA KWOTA PRZYCHODÓW</td>
+            <td>KWOTA POZOSTAŁA PO WYDATKACH</td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>test</td>
+            <td>test</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
   </div>
   );
 };

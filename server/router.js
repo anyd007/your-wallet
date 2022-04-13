@@ -3,6 +3,7 @@ const router = express.Router()
 const usersDataIncome = require("./users/users_income");
 const usersDataOutcome = require("./users-outcome/users-outcome")
 const regUsers = require("./regestry/regestry")
+const summaryData = require("./summaryIncome/summaryIncome")
 
 router.get("/regestry", async (req,res)=>{
     const mongo_reg = await regUsers.find();
@@ -50,6 +51,19 @@ router.post("/users-outcome", async (req, res)=>{
     outcome_choose: req.body.outcome_choose,
     outcome_date: req.body.outcome_date,
     outcome_comment: req.body.outcome_comment
+    })
+    await post.save()
+    res.send.post
+})
+router.get("/summary", async (req,res)=>{
+    const mongo_summaryData = await summaryData.find()
+    res.send(mongo_summaryData)
+})
+router.post("/summary", async (req,res)=>{
+    const post = new summaryData({
+    id: req.body.id,
+    summaryUser: req.body.summaryUser,
+    summaryAfterOutcome: req.body.summaryAfterOutcome
     })
     await post.save()
     res.send.post
