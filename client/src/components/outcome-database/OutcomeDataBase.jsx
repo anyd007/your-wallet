@@ -22,9 +22,27 @@ const OutcomeDataBase = (props) => {
       {option: "INNE"}
     ])
   }, [])
-
+  //przekazanie kontekstu zsumowanego przychodu z database
   const incomeSumFromDatabase = React.useContext(SummrayContext)
   
+  //przechwytywanie daych wpisywanych przez usera
+const [getOutcomeData, setGetOutcomeData] = React.useState({
+  outcome:'',
+  outcome_choose:'',
+  outcome_date:'',
+  outcome_comment:''
+})
+const outcomeData = e =>{
+  const {name, value} = e.target
+  setGetOutcomeData(prev=>({
+    ...prev,
+    [name]:value
+  }))
+}
+console.log(getOutcomeData);
+  const getOutcomeDataBtn = () =>{
+    console.log('hi');
+  }
   return (
   <div className="outcomeMainContener">
       <CgCloseR onClick={() => props.closeOutcomeDatabase()} className="closeIcon" />
@@ -41,35 +59,48 @@ const OutcomeDataBase = (props) => {
           id="outcome"
           className="inputsFeelds"
           name="outcome"
+          value={getOutcomeData.outcome}
           type="number"
+          onChange={outcomeData}
           min="1"/>
         </div></Zoom>
        <Zoom><div className="outcomeInputs">  
-          <label htmlFor="outcome-choose">WYBIERZ RODZAJ WYDATKU</label><br />
+          <label htmlFor="outcome_choose">WYBIERZ RODZAJ WYDATKU</label><br />
           <select
-          id="outcome-choose"
+          id="outcome_choose"
           className="inputsFeelds"
-          name="outcome-choose">
+          name="outcome_choose"
+          value={getOutcomeData.outcome_choose}
+          onChange={outcomeData}>
           {outComeChoose.map(el=>(<option>{el.option}</option>))}
           </select>
         </div></Zoom>
        <Zoom><div className="outcomeInputs" >
-          <label htmlFor="outcome-date">WPROWADŹ DATĘ WYDATKU</label><br />
+          <label htmlFor="outcome_date">WPROWADŹ DATĘ WYDATKU</label><br />
           <input 
-          id="outcome-date"
+          id="outcome_date"
           className="inputsFeelds"
-          name="outcome-date"
+          name="outcome_date"
+          value={getOutcomeData.outcome_date}
+          onChange={outcomeData}
           type="date"/>
         </div></Zoom>
         <Zoom><div className="outcomeInputs" >
-          <label htmlFor="outcome-comment">KOMENTARZ (max 100 znaków)</label><br />
+          <label htmlFor="outcome_comment">KOMENTARZ (max 100 znaków)</label><br />
           <textarea 
-          id="outcome-comment"
+          id="outcome_comment"
           className="inputsFeelds"
-          name="outcome-comment"
+          name="outcome_comment"
+          value={getOutcomeData.outcome_comment}
+          onChange={outcomeData}
           maxLength="100"/>
         </div></Zoom>
-    </section>
+        </section>
+        <div className="outcomeButtons">
+          <button disabled={!getOutcomeData.outcome || !getOutcomeData.outcome_choose || !getOutcomeData.outcome_date || getOutcomeData.outcome <=0}
+                onClick={()=> getOutcomeDataBtn()} type="button" className="btn addOutcomeBtn">DODAJ</button>
+          <button onClick={() => props.closeOutcomeDatabase()} type="button" className="btn closeOutcomeBtn">WYJDŹ</button>
+        </div>
     <section className="summaryFromIncome">
       <table>
         <thead>
@@ -80,8 +111,9 @@ const OutcomeDataBase = (props) => {
         </thead>
         <tbody>
           <tr>
-            <td>{incomeSumFromDatabase}</td>
+            <td>{incomeSumFromDatabase} PLN</td>
             <td>test</td>
+            <button onClick={()=>props.openIncomeDatabase()} type="button" className="btn incomeBtn">PRZYCHODY</button>
           </tr>
         </tbody>
       </table>

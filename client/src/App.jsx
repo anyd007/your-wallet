@@ -82,6 +82,13 @@ class App extends Component {
       this.setState({mainWindow:true})
     }
   }
+  handleOpenIncomeDatabaseFromOutcomeDB = () =>{
+    const outcomeDataBase = this.state
+    if(outcomeDataBase){
+      this.setState({outcomeDataBase:false})
+      this.setState({database:true})
+    }
+  }
   handleSendId = (val) =>{ //przekazywanie id z panelu rejestracji do regID
     this.setState({
       regId: val
@@ -101,7 +108,6 @@ class App extends Component {
     const {regId} = this.state
     const{databaseSummary} = this.state
     const {outcomeDataBase} = this.state
-    console.log(databaseSummary);
     return (
     <div className="app">
         {mainWindow && (
@@ -130,6 +136,7 @@ class App extends Component {
      <SummrayContext.Provider value={databaseSummary}>
         {outcomeDataBase &&
         <OutcomeDataBase 
+                  openIncomeDatabase={()=> this.handleOpenIncomeDatabaseFromOutcomeDB()}
                   closeOutcomeDatabase={() => this.handlecloseOutcomeDatabase()}/>}
     </SummrayContext.Provider>
     

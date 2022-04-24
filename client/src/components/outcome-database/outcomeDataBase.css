@@ -1,14 +1,14 @@
-.outComeGroup{
-    display: flex;
-    text-align: center;
-    width: 100%;
-    margin-top: 3%;
+.outComeGroup {
+  display: flex;
+  text-align: center;
+  width: 100%;
+  margin-top: 3%;
 }
-.inputsFeelds{
-    margin-top: 15px;
-    width: 60%;
+.inputsFeelds {
+  margin-top: 15px;
+  width: 60%;
 }
-#outcome-comment{
+#outcome_comment {
   resize: none;
   width: 90%;
   height: 70px;
@@ -19,6 +19,23 @@
   border: 1px solid white;
   border-radius: 10px;
 }
-.outcomeInputs{
-    width: 25%;
+.outcomeInputs {
+  width: 25%;
+}
+.outcomeButtons {
+  text-align: center;
+  margin-bottom: 3%;
+}
+.addOutcomeBtn,
+.closeOutcomeBtn,
+.incomeBtn {
+  border: solid 2px #ffd700;
+  font-size: 20px;
+  padding: 10px;
+}
+button:disabled{
+    background-color: gray;
+}
+button:hover:disabled{
+    background-color: tomato;
 }
