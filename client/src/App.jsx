@@ -1,9 +1,11 @@
 import React, { Component } from "react";
+import {BrowserRouter as Router, Route} from "react-router-dom";
 import MainView from "./components/mainView/MainView";
 import Regestry from "./components/regestry/Regestry";
 import Login from "./components/login/Login";
 import Database from "./components/database/Database";
 import OutcomeDataBase from "./components/outcome-database/OutcomeDataBase";
+import { SummrayContext } from "./sum-context";
 import "./App.css";
 
 class App extends Component {
@@ -15,10 +17,11 @@ class App extends Component {
       login: false,
       database: false,
       outcomeDataBase: false,
-      regId: ''
+      regId: '',
+      databaseSummary:''
     };
   }
-  handleOpenRegestry = () => {
+  handleOpenRegestry = () => { 
     const mainWindow = this.state;
     if (mainWindow) {
       this.setState({ mainWindow: false });
@@ -84,35 +87,53 @@ class App extends Component {
       regId: val
     })
   }
+  handleGetDatabaseSummary = (val) =>{ //przekazywanie zsumowanego przychodu z database do "databaseSummary"
+    this.setState({
+      databaseSummary: val
+    })
+  }
+ 
   render() {
     const { mainWindow } = this.state;
     const { regestry } = this.state;
     const {login} = this.state;
     const {database} = this.state;
     const {regId} = this.state
+    const{databaseSummary} = this.state
     const {outcomeDataBase} = this.state
+    console.log(databaseSummary);
     return (
-      <div className="app">
+    <div className="app">
         {mainWindow && (
           <MainView openRegestry={() => this.handleOpenRegestry()} 
                     openLogin={() => this.handleOpenLogin()}
-                    openDataBase={() => this.handleOpenDataBase()}/>
-        )}
+                    openDataBase={() => this.handleOpenDataBase()}/>)}
+
         {regestry && (
-          <Regestry colseRegestry={() => this.handleCloseRegestry()} />
-        )}
+          <Regestry 
+                    colseRegestry={() => this.handleCloseRegestry()} />)}
+
         {login && (
-         <Login closeLoginWindow={() => this.handleCloseLogin()}
-         openDataBase={() => this.handleOpenDataBase()}
+         <Login 
+                    closeLoginWindow={() => this.handleCloseLogin()}
+                    openDataBase={() => this.handleOpenDataBase()}
          //odbieranie id z panelu logowanie w celu przypisania w panelu bazy danych
-         sendId={this.handleSendId}/>)}   
-        {database && <Database 
-        getIdFromLogin={regId} //wysłanie pozyskanego ID do panelu bazy danych
-        colseDatabase={() => this.handleCloseDatabase()}
-        openOutcomeDataBase={()=> this.handleOpenOutcomeDataBase()}/>} 
-        {outcomeDataBase &&<OutcomeDataBase 
-        closeOutcomeDatabase={() => this.handlecloseOutcomeDatabase()}/>}
-      </div>
+                    sendId={this.handleSendId}/>)}   
+        {database && (
+        <Database 
+                   getIdFromLogin={regId} //wysłanie pozyskanego ID do panelu bazy danych
+                   colseDatabase={() => this.handleCloseDatabase()}
+                   openOutcomeDataBase={()=> this.handleOpenOutcomeDataBase()}
+                   //obieranie zsumowanego przychodu z database
+                   incomeDatabaseSummary={this.handleGetDatabaseSummary}/>)} 
+    
+     <SummrayContext.Provider value={databaseSummary}>
+        {outcomeDataBase &&
+        <OutcomeDataBase 
+                  closeOutcomeDatabase={() => this.handlecloseOutcomeDatabase()}/>}
+    </SummrayContext.Provider>
+    
+    </div>
     )
   }
 }

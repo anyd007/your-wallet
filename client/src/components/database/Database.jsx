@@ -1,4 +1,4 @@
-import React from "react";
+import React, { createContext } from "react";
 import axios from "axios"
 import "./database.css"
 import reactReveal from "react-reveal";
@@ -6,14 +6,14 @@ import {RiDeleteBin2Fill} from "react-icons/ri"
 import {CgCloseR} from "react-icons/cg"
 import Zoom from "react-reveal/Zoom";
 
-
 const Database = props =>{
   //pobieranie daty
-  const currentDate = new Date();
-  const date = `${currentDate.getDate()}/${currentDate.getMonth()+1}/${currentDate.getFullYear()}`;
+  const currentDate = new Date()
+  let month = ("0" + (currentDate.getMonth() + 1)).slice(-2);
+  const date = `${currentDate.getDate()}.${month}.${currentDate.getFullYear()}`;
 
   //pobieranie id usera przy logowaniu w celu porównania przy wyświtlaniu bazy danych
-  let individualIdFromReg = props.getIdFromLogin.toString()
+  let individualIdFromReg = props.getIdFromLogin.toString() 
 
     const [incomeOption, setIncomeOption] = React.useState([]) //wybór form wpływu
     React.useEffect(()=>{
@@ -57,6 +57,7 @@ const Database = props =>{
                 headers: { "Content-type": "application/json" }
             })
     }
+    
     //button który wysła dane na backend oraz czyci pola inputów
     const getIncomeDataBtn = () =>{
         userDataIncome.income_date = date
@@ -71,10 +72,10 @@ const Database = props =>{
         }))
         setRefresh(true)
         }
+
     //pobieranie danych z przychodów usera z express, oraz wstawianie ich w pola tabeli
     const[getIncomeData, setIncomeData] = React.useState([])
     const [refresh, setRefresh] = React.useState(true);
-    console.log(getIncomeData);
      const getData = async() =>{
         try {
       await  axios
@@ -92,31 +93,8 @@ const Database = props =>{
          getData()
     }, [refresh])
          
-        
-
-    //sumowanie wpływów usera
-    const [summary, setSummary] = React.useState([])
-    const getSum = () =>{
-        let setSum = getIncomeData.map(el=>{return el.income}).reduce((prev, curr)=> prev + curr, 0)
-        setSummary(setSum)
-        }
-    React.useEffect(()=>{
-        getSum()
-    },[getSum])
-    
-    //wywsłanie zsumowanych danych przychodu
-    const sendSummary = (summaryAfterOutcome) =>{
-        fetch("api/summary", {
-            method: "POST",
-            body: JSON.stringify({
-                id: individualIdFromReg,
-                summaryUser: summary,
-                summaryAfterOutcome:''
-            }),
-            headers: { "Content-type": "application/json" }
-        })
-    }
-
+ //sumowanych danych przychodu
+ let setSum =getIncomeData.map(el=>{return el.income}).reduce((prev, curr)=> prev + curr, 0)
     //kasowanie danych
    const deletePosition = (_id) => {
         axios.delete(`api/users_income/${_id}`)
@@ -170,7 +148,7 @@ const Database = props =>{
                onClick={() => getIncomeDataBtn()} className="btn addIncomeBtn" type="button">DODAJ</button>
                <button onClick={() => props.colseDatabase()} className="btn closeIncomeBtn">WYJDŹ</button>
             </div>
-            <section className="summaryGroup">
+            <section className="summaryGroup"> 
                 <table>
                     <thead>
                         <tr>
@@ -180,9 +158,9 @@ const Database = props =>{
                     </thead>
                     <tbody>
                         <tr>
-                            <td className="summaryTD">{summary}PLN</td>
+                           <td className="summaryTD">{setSum} PLN</td>
                             <td className="summaryTD">test</td>
-                            <button onClick={() => props.openOutcomeDataBase()} className="btn outcomeBtn" type="button">WYDATKI</button>
+                            <button onClick={() => {props.openOutcomeDataBase(); props.incomeDatabaseSummary(setSum)}} className="btn outcomeBtn" type="button">WYDATKI</button>
                         </tr>
                     </tbody>
                 </table>
@@ -211,5 +189,4 @@ const Database = props =>{
         </div>
     )
 }
-
 export default Database
