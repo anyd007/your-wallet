@@ -1,10 +1,13 @@
 import React from "react";
 import axios from "axios";
+import { SummrayContext } from "../../sum-context";
 import {CgCloseR} from "react-icons/cg"
 import "./outcomeDataBase.css";
 import { Zoom } from "react-reveal";
 
+
 const OutcomeDataBase = (props) => {
+  
   const [outComeChoose, setOutComeChoose] = React.useState([])
   React.useEffect(()=>{
     setOutComeChoose([
@@ -19,6 +22,9 @@ const OutcomeDataBase = (props) => {
       {option: "INNE"}
     ])
   }, [])
+
+  const incomeSumFromDatabase = React.useContext(SummrayContext)
+  
   return (
   <div className="outcomeMainContener">
       <CgCloseR onClick={() => props.closeOutcomeDatabase()} className="closeIcon" />
@@ -74,7 +80,7 @@ const OutcomeDataBase = (props) => {
         </thead>
         <tbody>
           <tr>
-            <td>test</td>
+            <td>{incomeSumFromDatabase}</td>
             <td>test</td>
           </tr>
         </tbody>
